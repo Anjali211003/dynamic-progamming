@@ -1,0 +1,25 @@
+class Solution{
+public:
+ bool subset(int sum, int arr[], int N)
+    {
+        if(sum <= 0 || N < 0) 
+        {
+            return sum == 0;
+        }
+        return subset(sum-arr[N], arr, N-1) || subset(sum, arr, N-1);
+    }
+    int equalPartition(int N, int arr[])
+    {
+        int sum=0;
+         for(int i=0;i<N;i++){
+            sum+=arr[i];
+        }
+        if(sum%2!=0){
+            return false;
+        }
+      return subset(sum/2,arr,N-1);
+            
+            
+       
+    }
+};
