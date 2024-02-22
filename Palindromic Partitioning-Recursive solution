@@ -1,0 +1,32 @@
+class Solution{
+public:
+   bool isPalindrome(string str,int i,int j){
+       while(i<=j){
+           if(str[i]!=str[j])
+           return false;
+          
+           i++;
+           j--;
+        }
+        return true;
+   } 
+    int solve(string str,int i,int j){
+        if(i>=j)
+        return 0;
+        
+        if(isPalindrome(str,i,j)==true)
+         return 0;
+         int ans=INT_MAX,temp;
+         for(int k=i;k<j;k++){
+             temp=solve(str,i,k)+solve(str,k+1,j)+1;
+             ans=min(ans,temp);
+         }
+         return ans;
+    }
+    int palindromicPartition(string str)
+    { int n=str.size();
+      int ans=solve(str,0,n-1);
+      return ans;
+    }
+};
+
