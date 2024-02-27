@@ -1,0 +1,41 @@
+class Solution {
+public:
+
+ int  t[107][10007];
+int solve(int e,int f){
+      if(t[e][f]!=-1){
+     return t[e][f];
+      }
+    if(f==0 || f==1){
+        t[e][f]=f;
+        return f;
+    }
+    if(e==1){
+        t[e][f]=f;
+        return f;
+    }
+          int ans = f;
+        int low = 1, high = f;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            int bottom = solve(e - 1, mid - 1); 
+            int top = solve(e, f- mid);
+            int temp = 1 + max(top, bottom); 
+            if (bottom < top)
+                low = mid + 1;
+            else 
+                high = mid - 1;
+
+            ans = min(ans, temp);
+        }
+
+        return t[e][f] = ans;
+
+
+}
+    int superEggDrop(int k, int n) {
+        memset(t,-1,sizeof(t));
+        int ans=solve(k,n);
+        return ans;
+    }
+};
