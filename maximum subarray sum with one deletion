@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int maximumSum(vector<int>& arr) {
+        int maxi=arr[0];
+        int n=arr.size();
+        int prevwithdelete=0;
+  
+        int prevnotdelete=arr[0];
+        for(int i=1;i<n;i++){
+            prevwithdelete=max(prevnotdelete,arr[i]+prevwithdelete);
+            prevnotdelete=max(arr[i],arr[i]+prevnotdelete);
+            maxi=max(maxi,max(prevwithdelete,prevnotdelete));
+        }
+        return maxi;
+    }
+};
