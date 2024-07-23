@@ -1,0 +1,23 @@
+class Solution {
+public:
+int edit(string word1, string word2,int m,int n){
+     
+        if(m==0){
+            return n;
+        }
+        if(n==0)
+        return m;
+        if(word1[m-1]==word2[n-1])
+        return edit(word1,word2,m-1,n-1);
+        else
+        return 1+min(edit(word1,word2,m-1,n),(min(edit(word1,word2,m,n-1),edit(word1,word2,m-1,n-1))));
+}
+    int minDistance(string word1, string word2) {
+       int m=word1.size();
+        int n=word2.size();
+  int ans=edit(word1,word2,m,n);
+  return ans;
+    }
+};
+
+/* USING THIS CODE WE WILL GET TLE */
