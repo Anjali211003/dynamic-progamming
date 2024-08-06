@@ -21,3 +21,58 @@ public:
         return ans;
     }
 };
+
+
+/* USING MEMOIZATION */
+class Solution {
+public:
+   int solve(int index,int prev,vector<int>& nums,int n, vector<vector<int>>&t){
+    if(index==n)
+    return 0;
+    if(t[index][prev+1]!=-1)
+    return t[index][prev+1];
+    int inc=0;
+    int exc;
+  
+    if((prev==-1) || (nums[index]>nums[prev])){
+     inc=(1+solve(index+1,index,nums,n,t));  
+    }
+       exc=0+solve(index+1,prev,nums,n,t);
+   
+    return t[index][prev+1]=max(inc,exc);
+   }
+    int lengthOfLIS(vector<int>& nums) {
+        int n=nums.size();
+       vector<vector<int>>t(n,vector<int>(n+1,-1));
+        int ans=solve(0,-1,nums,n,t);
+        return ans;
+    }
+};
+
+
+/* USING DYNAMIC PROGRAMMING */
+class Solution {
+public:
+   int solve(vector<int>& nums,int n){
+   if(n == 0)
+            return 0;
+        vector<int> ans;
+        ans.push_back(nums[0]);
+        
+        for(int i=1; i<n; i++){
+            if(nums[i] > ans.back())
+                ans.push_back(nums[i]);
+            else{
+                int index = lower_bound(ans.begin(), ans.end(), nums[i]) - ans.begin();
+                ans[index] = nums[i];
+            }
+        }
+        return ans.size();
+   }
+    int lengthOfLIS(vector<int>& nums) {
+        int n=nums.size();
+       
+        int ans=solve(nums,n);
+        return ans;
+    }
+};
