@@ -1,0 +1,59 @@
+//{ Driver Code Starts
+// Initial Template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+// User function Template for C++
+
+class Solution{
+public:
+ int f1(int row,int col,vector<vector<int>>& Matrix,int N,
+      vector<vector<int>>&dp){
+        if(row>=Matrix.size() || col>=Matrix[row].size()){
+            return 0;
+        }
+        if(row==Matrix.size()-1){
+            return Matrix[row][col];
+        }
+        if(dp[row][col]!=-1){
+            return dp[row][col];
+        }
+        
+    int up=Matrix[row][col]+f1(row+1,col,Matrix,N,dp);
+    int lf=Matrix[row][col]+f1(row+1,col-1,Matrix,N,dp);
+    int rh=Matrix[row][col]+f1(row+1,col+1,Matrix,N,dp);
+    return dp[row][col]=max(up,max(rh,lf));
+    }
+    int maximumPath(int N, vector<vector<int>> Matrix)
+    {
+           int m=Matrix[0].size();
+          int maximum=0;
+          vector<vector<int>>dp(N+1 , vector<int>(m+1 , -1));
+          for(int j=0;j<m;j++){
+              maximum=max(maximum,f1(0,j,Matrix,m,dp));
+          }
+          return maximum;
+    }
+   
+};
+
+//{ Driver Code Starts.
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int N;
+        cin>>N;
+        vector<vector<int>> Matrix(N, vector<int>(N, 0));
+        for(int i = 0;i < N*N;i++)
+            cin>>Matrix[(i/N)][i%N];
+        
+        Solution ob;
+        cout<<ob.maximumPath(N, Matrix)<<"\n";
+    }
+    return 0;
+}
+// } Driver Code Ends
